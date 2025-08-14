@@ -111,6 +111,59 @@ subMenuEl.style.top = 0;
 --The second line of code of the function should immediately return if the element clicked was not an <a> element.
 --Log the content of the <a> to verify the handler is working.*/
 
+// let topMenuLinks = topMenuEl.childNodes;
+// console.log("element a", topMenuLinks);
+
+// for (let i = 0; i < topMenuLinks.length; i++) {
+//   console.log("element a", topMenuLinks[i]);
+
+// }
+
+// topMenuEl.addEventListener('click', (e) => {
+//   e.preventDefault();
+
+//   if (e.target.tagName !== 'A') {
+//     return;
+
+//   }
+//   let active = e.target.classList.contains('active');
+
+
+//   for (const link of topMenuLinks) {
+//     link.classList.remove('active');
+//   }
+
+//   if (active) {
+//     e.target.classList.remove('active');
+//   } else {
+//     e.target.classList.add('active');
+//   }
+
+
+//   console.log(e.target.innerText.toLowerCase());
+
+// });
+
+/* Now that we have references to each of these links, and a registered event listener, we will want to add a toggled "active" state to each menu item, showing whether or not it is currently selected:
+
+// 1. The event listener should add the active class to the <a> element that was clicked, unless it was already active, in which case it should remove it.
+// 2. The event listener should remove the active class from each other <a> element in topMenuLinks - whether the active class exists or not.
+// Hint: Removing a non-existent class from an element does not cause an error! */
+
+
+
+
+
+// -------------------PART 5----------
+/*Within the same event listener, we want to toggle the submenu between active and non-active states. First, we will set the submenu to show or hide itself depending on the menu state:
+1. Within the event listener, if the clicked <a> element does not yet have a class of "active" (it was inactive when clicked):
+ a) If the clicked <a> element's "link" object within menuLinks has a subLinks property (all do, except for the "link" object for ABOUT), set the CSS top property of subMenuEl to 100%.
+
+ b) Otherwise, set the CSS top property of subMenuEl to 0.
+ Hint: Caching the "link" object will come in handy for passing its subLinks array later.*/
+
+
+
 let topMenuLinks = topMenuEl.childNodes;
 console.log("element a", topMenuLinks);
 
@@ -129,8 +182,8 @@ topMenuEl.addEventListener('click', (e) => {
   let active = e.target.classList.contains('active');
 
 
-  for (const link of topMenuLinks) {
-    link.classList.remove('active');
+  for (const statusLink of topMenuLinks) {
+    statusLink.classList.remove('active');
   }
 
   if (active) {
@@ -140,12 +193,34 @@ topMenuEl.addEventListener('click', (e) => {
   }
 
 
+  let clickedLink = e.target.textContent;
+  let linkObject;
+  console.log("i am cliked", clickedLink);
+
+  for (const link of menuLinks) {
+    console.log('tada', link.text);
+    if (clickedLink == link.text) {
+      linkObject = link;
+    }
+  }
+
+  if (clickedLink && linkObject.subLinks) {
+    subMenuEl.style.top = '100%';
+    buildSubmenu(linkObject.subLinks);
+  } else {
+    subMenuEl.style.top = 0;
+  }
+
   console.log(e.target.innerText.toLowerCase());
 
 });
 
-/* Now that we have references to each of these links, and a registered event listener, we will want to add a toggled "active" state to each menu item, showing whether or not it is currently selected:
-
-// 1. The event listener should add the active class to the <a> element that was clicked, unless it was already active, in which case it should remove it.
-// 2. The event listener should remove the active class from each other <a> element in topMenuLinks - whether the active class exists or not.
-// Hint: Removing a non-existent class from an element does not cause an error! */
+function buildSubmenu(subLinks){
+  subMenuEl.remove.textContent;
+  for(const item of subLinks){
+    let anchor = document.createElement('a');
+    anchor.setAttribute("href", item.href);
+    anchor.textContent = `${item.text}`;
+  subMenuEl.append(anchor);
+  }
+}
