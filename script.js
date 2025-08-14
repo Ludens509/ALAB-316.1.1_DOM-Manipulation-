@@ -103,6 +103,8 @@ Set the CSS top property of subMenuEl to the value of 0.*/
 subMenuEl.style.position = 'absolute';
 subMenuEl.style.top = 0;
 
+// ---------------PART 4---------------
+
 /*`1. Select and cache the all of the <a> elements inside of topMenuEl in a variable named topMenuLinks.
  2 .Attach a delegated 'click' event listener to topMenuEl.
  --The first line of code of the event listener function should call the event object's preventDefault() method.
@@ -119,13 +121,25 @@ for (let i = 0; i < topMenuLinks.length; i++) {
 
 topMenuEl.addEventListener('click', (e) => {
   e.preventDefault();
-  if(e.target.tagName!=='A'){
-  // if (!topMenuLinks) {
+
+  if (e.target.tagName !== 'A') {
     return;
-  } else {
-    
+
   }
-    
+  let active = e.target.classList.contains('active');
+
+
+  for (const link of topMenuLinks) {
+    link.classList.remove('active');
+  }
+
+  if (active) {
+    e.target.classList.remove('active');
+  } else {
+    e.target.classList.add('active');
+  }
+
+
   console.log(e.target.innerText.toLowerCase());
 
 });
