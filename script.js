@@ -179,48 +179,62 @@ topMenuEl.addEventListener('click', (e) => {
     return;
 
   }
-  let active = e.target.classList.contains('active');
+  const active = e.target.classList.contains('active');
 
-
+  //remove active class from all element <a>
   for (const statusLink of topMenuLinks) {
     statusLink.classList.remove('active');
   }
 
-  if (active) {
-    e.target.classList.remove('active');
-  } else {
+  if (!active) {
+    // e.target.classList.remove('active');
+
     e.target.classList.add('active');
-  }
 
+    let clickedLink = e.target.textContent.toLowerCase();
+    let linkObject;
+    //log the content of <a> to verify it
+    console.log("i am cliked", clickedLink);
 
-  let clickedLink = e.target.textContent;
-  let linkObject;
-  console.log("i am cliked", clickedLink);
-
-  for (const link of menuLinks) {
-    console.log('tada', link.text);
-    if (clickedLink == link.text) {
-      linkObject = link;
+    for (const link of menuLinks) {
+      console.log('text - link:', link.text);
+      if (clickedLink == link.text) {
+        linkObject = link;
+      }
     }
-  }
 
-  if (clickedLink && linkObject.subLinks) {
-    subMenuEl.style.top = '100%';
-    buildSubmenu(linkObject.subLinks);
+    if (clickedLink && linkObject.subLinks) {
+      subMenuEl.style.top = '100%';
+      buildSubmenu(linkObject.subLinks);
+      console.log(` clicked Link-- ${clickedLink}`)
+    } else {
+
+      //set the CSS of subMenuEL to 0
+      subMenuEl.style.top = 0;
+
+      //Update the content of <h1> if about was clicked
+      if (clickedLink === 'about') {
+        mainEl.innerHTML = '<h1>About</h1>';
+      }
+
+      console.log(`${clickedLink} don\'t have subLinks`);
+    }
+
+    console.log(e.target.innerText.toLowerCase());
   } else {
-    subMenuEl.style.top = 0;
+    subMenuEl.style.top = 0; //link is already active, then hide the submenu
+    console.log('Link is already active');
   }
-
-  console.log(e.target.innerText.toLowerCase());
 
 });
 
-function buildSubmenu(subLinks){
+// helper--function
+function buildSubmenu(subLinks) {
   subMenuEl.remove.textContent;
-  for(const item of subLinks){
+  for (const item of subLinks) {
     let anchor = document.createElement('a');
     anchor.setAttribute("href", item.href);
     anchor.textContent = `${item.text}`;
-  subMenuEl.append(anchor);
+    subMenuEl.append(anchor);
   }
 }
