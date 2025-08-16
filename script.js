@@ -210,7 +210,7 @@ topMenuEl.addEventListener('click', (e) => {
     } else {
 
       //set the CSS of subMenuEL to 0
-      subMenuEl.style.top = 0;
+      subMenuEl.style.top = '0';
 
       //Update the content of <h1> if about was clicked
       if (clickedLink === 'about') {
@@ -222,7 +222,7 @@ topMenuEl.addEventListener('click', (e) => {
 
     console.log(e.target.innerText.toLowerCase());
   } else {
-    subMenuEl.style.top = 0; //link is already active, then hide the submenu
+    subMenuEl.style.top = '0'; //link is already active, then hide the submenu
     console.log('Link is already active');
   }
 
